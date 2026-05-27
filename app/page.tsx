@@ -945,6 +945,9 @@ export default function Home() {
                     ) : null}
 
 
+                    <div className="workflow-desktop-grid">
+                      <div className="workflow-artifact-column">
+
                     {isFieldStepKey(activeWorkflowStep.key) ? (() => {
                       const key = activeWorkflowStep.key;
                       const value = state.selections[key].trim();
@@ -1170,9 +1173,23 @@ export default function Home() {
                         </div>
                       );
                     })() : null}
+                      </div>
+
+                      <aside className="workflow-ai-column" aria-label="AI action and generated candidates">
+                        <div className="workflow-ai-panel">
+                          <div className="workflow-ai-panel-header">
+                            <div>
+                              <span>AI action</span>
+                              <h3>{selectedActionTemplate?.title || "No action assigned"}</h3>
+                            </div>
+                            <Badge variant={activeWorkflowComplete ? "default" : "secondary"}>
+                              {activeWorkflowComplete ? "Using saved context" : "Needs context"}
+                            </Badge>
+                          </div>
+
                     <div className="workflow-controls">
                       <label>
-                        <span>Assigned action</span>
+                        <span>Action</span>
                         <select
                           value={selectedActionTemplate?.id || ""}
                           onChange={(event) =>
@@ -1232,6 +1249,7 @@ export default function Home() {
                         {actionRunning ? "Generating" : actionResult?.workflowStep === activeWorkflowStep.key ? "Generate more" : "Generate suggestions"}
                       </Button>
                     </div>
+                        </div>
 
                     {actionRunning ? (
                       <div className={`workflow-thinking ${actionStreamingMessage ? "has-stream" : ""}`} aria-label="Generating suggestions" aria-live="polite">
@@ -1356,7 +1374,16 @@ export default function Home() {
                           </div>
                         ) : null}
                       </div>
+                    ) : !actionRunning ? (
+                      <div className="workflow-result workflow-result-empty">
+                        <div className="workflow-response">
+                          <span>Candidate preview</span>
+                          <p>Run the assigned action to generate options. Nothing is saved until you choose what to apply.</p>
+                        </div>
+                      </div>
                     ) : null}
+                      </aside>
+                    </div>
 
                     <div className="workflow-footer-actions">
                       <Button className="secondary-button" type="button" onClick={() => moveWorkflowStep(-1)} disabled={activeWorkflowIndex === 0}>
@@ -2084,4 +2111,3 @@ function placeholderFor(key: FieldKey) {
       return "Example:\nSupplier variability\nTime pressure\nUnclear tradeoffs";
   }
 }
-

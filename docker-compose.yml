@@ -15,6 +15,7 @@ services:
     volumes:
       - .:/app
       - jtbd_node_modules:/app/node_modules
+      - jtbd_next:/app/.next
       - ./data:/app/data
     networks:
       - web
@@ -29,6 +30,7 @@ services:
 
 volumes:
   jtbd_node_modules:
+  jtbd_next:
 
 networks:
   web:
