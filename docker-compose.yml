@@ -1,0 +1,36 @@
+services:
+  jtbd:
+    image: node:22-bookworm-slim
+    container_name: jtbd-tool
+    restart: unless-stopped
+    working_dir: /app
+    command: sh -lc "npm install && npm run dev -- --hostname 0.0.0.0"
+    env_file:
+      - .env.local
+    environment:
+      PORT: 3000
+      NEXT_TELEMETRY_DISABLED: "1"
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/app
+      - jtbd_node_modules:/app/node_modules
+      - ./data:/app/data
+    networks:
+      - web
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: openjungle_web
+      traefik.http.routers.jtbd.entrypoints: websecure
+      traefik.http.routers.jtbd.middlewares: cf-only@file
+      traefik.http.routers.jtbd.rule: Host(`jtbd.globalsupply.link`)
+      traefik.http.routers.jtbd.tls.certresolver: letsencrypt
+      traefik.http.services.jtbd.loadbalancer.server.port: "3000"
+
+volumes:
+  jtbd_node_modules:
+
+networks:
+  web:
+    name: openjungle_web
+    external: true
