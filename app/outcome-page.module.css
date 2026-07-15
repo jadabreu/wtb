@@ -1,0 +1,121 @@
+.layout > div:last-child {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.workbench,
+.workspace,
+.content {
+  min-height: 0;
+  overflow: visible;
+}
+
+.workbench {
+  display: grid;
+  flex: 1;
+  width: 100%;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(520px, 1fr) 520px;
+  gap: 14px;
+  align-items: stretch;
+  height: 100%;
+}
+
+.workspaceRightCollapsed {
+  grid-template-columns: minmax(0, 1fr) 56px;
+}
+
+.agentMain {
+  height: 100%;
+  min-height: 0;
+}
+
+.artifactInspector {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: none;
+}
+
+.artifactInspector[data-collapsed="true"] {
+  align-items: center;
+  padding: 8px;
+}
+
+.artifactInspector[data-collapsed="true"] .inspectorContent {
+  display: none;
+}
+
+.artifactInspector[data-collapsed="true"] .rightSidebarToggleCollapsed {
+  display: grid;
+}
+
+.rightSidebarToggleCollapsed {
+  display: none;
+  width: 40px;
+  height: 40px;
+}
+
+.inspectorContent {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.inspectorHeader {
+  display: flex;
+  min-height: 58px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+.inspectorHeader h2 {
+  margin: 0;
+  color: #111111;
+  font-size: 17px;
+  font-weight: 760;
+  line-height: 1.15;
+}
+
+.inspectorHeader p {
+  margin: 3px 0 0;
+  color: #6f6f6f;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.content {
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 14px 16px 18px;
+}
+
+.artifactMap {
+  min-width: 0;
+}
+
+.artifactDetail {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.alert {
+  width: 100%;
+}

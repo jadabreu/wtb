@@ -1,4 +1,4 @@
-import { chromium, devices } from "@playwright/test";
+import { chromium } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 
 const appUrl = process.env.UI_SMOKE_URL ?? "https://jtbd.globalsupply.link";
@@ -7,21 +7,19 @@ const outputDir = "playwright-artifacts";
 const viewports = [
   {
     name: "desktop",
-    viewport: { width: 1440, height: 1000 },
+    viewport: { width: 2048, height: 1100 },
     deviceScaleFactor: 1,
     isMobile: false,
     hasTouch: false,
-  },
-  {
-    name: "mobile",
-    ...devices["iPhone 15"],
   },
 ];
 
 async function main() {
   await mkdir(outputDir, { recursive: true });
 
+  const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
   const browser = await chromium.launch({
+    ...(executablePath ? { executablePath } : {}),
     args: ["--no-sandbox"],
   });
 
@@ -45,16 +43,18 @@ async function main() {
     await page.goto(appUrl, { waitUntil: "domcontentloaded" });
     await page.waitForLoadState("networkidle", { timeout: 5000 }).catch(() => undefined);
     await page.waitForFunction(() => {
-      const sidebarText = document.querySelector(".project-sidebar")?.textContent || "";
-      return /\b[1-9]\d* saved\b/.test(sidebarText);
-    }, null, { timeout: 10000 }).catch(() => undefined);
+      const projectButton = document.querySelector('button[aria-label="Select research project"]');
+      return projectButton && !projectButton.hasAttribute("disabled");
+    }, null, { timeout: 30000 });
 
-    await page.getByRole("heading", { name: "What to Build?" }).waitFor();
-    await page.getByText("Find customer problems worth solving").waitFor();
-    await page.getByRole("button", { name: /New research/i }).waitFor();
-    await page.getByRole("heading", { name: /Customer Outcome Mapping/i }).waitFor();
-    await page.getByRole("button", { name: /AI Actions/i }).first().waitFor();
-    await page.getByRole("tab", { name: /Workflow/i }).waitFor();
+    await page.getByRole("heading", { name: /Outcome Mapping/i, level: 1 }).waitFor();
+    await page.getByLabel("Select research project").waitFor();
+    await page.getByRole("link", { name: /Prompts/i }).first().waitFor();
+    await page.locator('aside[aria-label="Chat"]').waitFor();
+    await page.getByRole("complementary", { name: "Research artifacts" }).waitFor();
+    await page.getByRole("navigation", { name: "Research artifacts" }).waitFor();
+    await page.getByLabel("Collapse navigation").waitFor();
+    await page.getByLabel("Collapse artifacts").waitFor();
 
     const screenshotPath = `${outputDir}/${config.name}.png`;
     await page.screenshot({ path: screenshotPath, fullPage: true, caret: "initial" });

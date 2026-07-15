@@ -1,0 +1,360 @@
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  padding: 17px 16px 24px;
+}
+
+.sidebar-collapse-button {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+}
+
+.sidebar-logo-mark {
+  display: grid;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 999px;
+  background: #171717;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 760;
+  line-height: 1;
+}
+
+.sidebar-brand > div:not(.sidebar-logo-mark) {
+  display: grid;
+  gap: 1px;
+  min-width: 0;
+}
+
+.sidebar-brand strong {
+  overflow: hidden;
+  color: #111111;
+  font-size: 17px;
+  font-weight: 780;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-brand small {
+  overflow: hidden;
+  color: #6f6f6f;
+  font-size: 12px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-section-label {
+  margin: 0 12px 8px;
+  color: #6f6f6f;
+  font-size: 11px;
+  font-weight: 760;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 4px;
+  padding: 0 16px;
+}
+
+.sidebar-nav [data-slot="button"] {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.sidebar-nav-item {
+  height: 36px;
+  border-radius: 5px;
+  color: #171717;
+  font-size: 14px;
+  font-weight: 650;
+  box-shadow: none;
+}
+
+.sidebar-nav-item:hover {
+  background: #f0f0f0;
+}
+
+.sidebar-nav-item.active,
+.sidebar-nav-item.active:hover {
+  background: #171717;
+  color: #ffffff;
+}
+
+.sidebar-spacer {
+  min-height: 0;
+}
+
+.sidebar-project-controls {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 20px 16px 0;
+}
+
+.sidebar-project-controls .sidebar-section-label {
+  margin: 0 0 2px;
+}
+
+.sidebar-project-select {
+  width: 100%;
+  min-width: 0;
+  background: #ffffff;
+}
+
+.sidebar-project-controls [data-slot="select-trigger"] {
+  width: 100%;
+  min-width: 0;
+}
+
+.sidebar-project-controls [data-slot="select-value"] {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-project-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
+  gap: 8px;
+  align-items: center;
+}
+
+.sidebar-project-actions [data-slot="badge"] {
+  min-width: 0;
+  height: 34px;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #525252;
+  font-size: 12px;
+  font-weight: 560;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-project-actions [data-slot="button"] {
+  min-width: 0;
+}
+
+.sidebar-project-actions [data-slot="button"]:last-child {
+  padding-inline: 0;
+}
+
+.sidebar-cta {
+  display: grid;
+  gap: 4px;
+  margin: 0 16px 16px;
+  border-radius: 10px;
+  background: #f0f0f0;
+  padding: 16px;
+}
+
+.sidebar-cta p,
+.sidebar-cta span {
+  margin: 0;
+  color: #707070;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.sidebar-cta strong {
+  overflow: hidden;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #d1ddd8;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff 0%, #eff6f3 100%);
+  color: var(--accent);
+  box-shadow: var(--shadow-tight);
+}
+
+.brand h1 {
+  margin: 0;
+  color: #111816;
+  font-size: 18px;
+  font-weight: 820;
+  line-height: 1.08;
+}
+
+.brand p {
+  margin: 3px 0 0;
+  color: #66756f;
+  font-size: 11.5px;
+  font-weight: 520;
+  line-height: 1.25;
+}
+
+.frame-header {
+  align-items: stretch;
+  min-height: 0;
+  padding: 12px 15px;
+}
+
+.frame-header-copy {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+}
+
+.frame-progress {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #d8e4df;
+  border-radius: 7px;
+  background: #f6faf8;
+  padding: 8px 9px;
+}
+
+.frame-progress-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.frame-progress-label span,
+.frame-progress-label strong {
+  overflow: hidden;
+  color: #31413c;
+  font-size: 11.5px;
+  font-weight: 780;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.frame-progress-label strong {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+.frame-progress.complete .frame-progress-label span,
+.frame-progress.complete .frame-progress-label strong {
+  color: var(--accent-strong);
+}
+
+.frame-progress-track {
+  display: block;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e4ece8;
+}
+
+.frame-progress-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #74d5c8);
+  transition: width 180ms ease;
+}
+
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+}
+
+.project-sidebar,
+.pane {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  box-shadow: none;
+  outline: none;
+}
+
+.project-sidebar {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  gap: 0;
+  min-height: 0;
+  border-width: 0 1px 0 0;
+  border-radius: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.project-sidebar[data-collapsed="true"] {
+  align-items: center;
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.project-sidebar[data-collapsed="true"] .sidebar-brand {
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 8px 16px;
+}
+
+.project-sidebar[data-collapsed="true"] .sidebar-logo-mark {
+  width: 38px;
+  height: 38px;
+}
+
+.project-sidebar[data-collapsed="true"] .sidebar-collapse-button {
+  margin-left: 0;
+}
+
+.project-sidebar[data-collapsed="true"] .sidebar-nav {
+  width: 100%;
+  padding: 0 8px;
+}
+
+.project-sidebar[data-collapsed="true"] .sidebar-nav [data-slot="button"] {
+  justify-content: center;
+}
+
+.project-sidebar[data-collapsed="true"] .sidebar-nav-item {
+  width: 40px;
+  height: 40px;
+  justify-self: center;
+  padding: 0;
+}
+
+.project-selector-trigger {
+  width: 240px;
+  max-width: 28vw;
+}

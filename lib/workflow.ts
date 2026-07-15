@@ -1,6 +1,6 @@
 import { fieldLabels, isListFieldKey, type AppState, type FieldKey, type PromptAppliesTo, type WorkflowStepKey } from "./types";
 
-export type WorkflowStepKind = "single" | "list" | "job_map" | "scoped_list";
+export type WorkflowStepKind = "single" | "list" | "job_map" | "theme_list" | "ideal_list" | "scoped_list";
 
 export type WorkflowStep = {
   key: WorkflowStepKey;
@@ -9,8 +9,14 @@ export type WorkflowStep = {
   goal: string;
   kind: WorkflowStepKind;
   requiredBefore?: WorkflowStepKey[];
-  scopeRequired?: "job_step";
+  scopeRequired?: "job_step" | "ideal_state";
   defaultN: number;
+};
+
+export type WorkflowArtifactGroup = {
+  title: string;
+  description: string;
+  stepKeys: WorkflowStepKey[];
 };
 
 export const workflowSteps: WorkflowStep[] = [
@@ -94,6 +100,60 @@ export const workflowSteps: WorkflowStep[] = [
     requiredBefore: ["job_map"],
     scopeRequired: "job_step",
     defaultN: 8
+  },
+  {
+    key: "themes",
+    label: "Themes",
+    shortLabel: "Themes",
+    goal: "Create reusable themes that organize ideals and success metrics.",
+    kind: "theme_list",
+    defaultN: 8
+  },
+  {
+    key: "ideals",
+    label: "Ideals",
+    shortLabel: "Ideals",
+    goal: "Define the ideal states this job should produce.",
+    kind: "ideal_list",
+    defaultN: 8
+  },
+  {
+    key: "blockers",
+    label: "Blockers",
+    shortLabel: "Blockers",
+    goal: "Identify what can prevent each ideal state from being reached.",
+    kind: "scoped_list",
+    requiredBefore: ["ideals"],
+    scopeRequired: "ideal_state",
+    defaultN: 8
+  }
+];
+
+export const workflowArtifactGroups: WorkflowArtifactGroup[] = [
+  {
+    title: "Frame",
+    description: "Who and when",
+    stepKeys: ["product", "end_user", "context"]
+  },
+  {
+    title: "Jobs",
+    description: "Progress and pressure",
+    stepKeys: ["job", "emotional_job", "social_job", "complexity_factors"]
+  },
+  {
+    title: "Structure",
+    description: "Map and measures",
+    stepKeys: ["job_map", "success_metrics"]
+  },
+  {
+    title: "Organization",
+    description: "Themes and tags",
+    stepKeys: ["themes"]
+  },
+  {
+    title: "Desired state",
+    description: "Ideals and blockers",
+    stepKeys: ["ideals", "blockers"]
   }
 ];
 
@@ -104,7 +164,7 @@ export function isWorkflowStepKey(value: unknown): value is WorkflowStepKey {
 }
 
 export function isPromptAppliesTo(value: unknown): value is PromptAppliesTo {
-  return value === "chat" || isWorkflowStepKey(value);
+  return value === "chat" || (isWorkflowStepKey(value) && value !== "themes");
 }
 
 export function getWorkflowStep(key: WorkflowStepKey) {
@@ -115,14 +175,21 @@ export function getWorkflowStepIndex(key: WorkflowStepKey) {
   return Math.max(0, workflowSteps.findIndex((step) => step.key === key));
 }
 
+export function getWorkflowArtifactGroup(key: WorkflowStepKey) {
+  return workflowArtifactGroups.find((group) => group.stepKeys.includes(key));
+}
+
 export function isWorkflowStepComplete(step: WorkflowStep, state: AppState) {
   if (step.kind === "job_map") return state.jobSteps.length > 0;
-  if (step.kind === "scoped_list") return state.jobSteps.some((jobStep) => jobStep.successMetrics.length > 0);
+  if (step.kind === "theme_list") return state.themes.length > 0;
+  if (step.kind === "ideal_list") return state.idealStates.length > 0;
+  if (step.key === "success_metrics") return state.jobSteps.some((jobStep) => jobStep.successMetrics.length > 0);
+  if (step.key === "blockers") return state.idealStates.some((idealState) => idealState.blockers.length > 0);
   return isFieldStepKey(step.key) ? isFieldValueComplete(step.key, state.selections[step.key]) : false;
 }
 
 export function isFieldStepKey(key: WorkflowStepKey): key is FieldKey {
-  return key !== "job_map" && key !== "success_metrics";
+  return key !== "job_map" && key !== "success_metrics" && key !== "themes" && key !== "ideals" && key !== "blockers";
 }
 
 export function isFieldValueComplete(key: FieldKey, value: string) {

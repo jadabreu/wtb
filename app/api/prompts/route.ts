@@ -5,7 +5,7 @@ import {
   listPromptTemplates,
   restoreBuiltinPromptTemplates,
   updatePromptTemplate
-} from "@/lib/db";
+} from "@/lib/document-store";
 import type { PromptActionType, PromptAppliesTo, PromptScopeRequired } from "@/lib/types";
 
 export const runtime = "nodejs";

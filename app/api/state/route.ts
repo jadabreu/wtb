@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getState, resolveProjectId, saveJobSteps, saveSelections } from "@/lib/db";
-import { fieldKeys, type FieldKey, type JobStep } from "@/lib/types";
+import { getState, resolveProjectId, saveIdealStates, saveJobSteps, saveSelections, saveThemes } from "@/lib/document-store";
+import { fieldKeys, type FieldKey, type IdealState, type JobStep, type Theme } from "@/lib/types";
 
 export const runtime = "nodejs";
 
@@ -18,7 +18,9 @@ export async function PUT(request: Request) {
   const body = (await request.json()) as {
     projectId?: number;
     selections?: Partial<Record<FieldKey, string>>;
+    themes?: Array<Partial<Theme>>;
     jobSteps?: Array<Partial<JobStep>>;
+    idealStates?: Array<Partial<IdealState>>;
   };
   const projectId = resolveProjectId(body.projectId);
   const nextSelections: Partial<Record<FieldKey, string>> = {};
@@ -34,8 +36,16 @@ export async function PUT(request: Request) {
     saveSelections(projectId, nextSelections);
   }
 
+  if (Array.isArray(body.themes)) {
+    saveThemes(projectId, body.themes);
+  }
+
   if (Array.isArray(body.jobSteps)) {
     saveJobSteps(projectId, body.jobSteps);
+  }
+
+  if (Array.isArray(body.idealStates)) {
+    saveIdealStates(projectId, body.idealStates);
   }
 
   return NextResponse.json(getState(projectId));

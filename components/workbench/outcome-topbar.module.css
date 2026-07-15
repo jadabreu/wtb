@@ -1,0 +1,13 @@
+.topbar {
+  min-height: 52px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 14px 20px 4px;
+}
+
+.topbar h1 {
+  font-size: 21px;
+  font-weight: 650;
+  line-height: 1.15;
+}

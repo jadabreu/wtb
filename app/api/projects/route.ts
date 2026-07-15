@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createProject, deleteProject, getState, resolveProjectId } from "@/lib/db";
+import { createProject, deleteProject, getState, resolveProjectId } from "@/lib/document-store";
 
 export const runtime = "nodejs";
 
